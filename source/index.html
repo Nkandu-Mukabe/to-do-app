@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Task List</title>
+
+    <link rel="stylesheet" href="main.css"/>
+</head>
+<body>
+
+    <header>
+        <h1>Welcome *name*, here are your tasks</h1>
+        <!--here's the input box code-->
+        <form id="new-task-form">
+            <!--input box for the task you're creating. doesn't need a name field-->
+            <input
+                type = "text"
+                id = "new-task-input"
+                placeholder="Add a new task!"/>
+            
+            <!--create a submit button-->
+            <input
+                type = "submit"
+                id = "new-task-submit"
+                value = "Add task"
+            />
+        </form>
+    </header>
+
+    <main>
+        <section class="task-list">
+            <h2>Pending Tasks</h2>
+            <div id="tasks">
+
+                <!--dummy task vv comment it out to delete it-->
+                <div class = "task">
+                    <div class="content">
+                        <!--dummy task just for funsies-->
+                        <input
+                            type="text"
+                            class="text"
+                            value="Test task"
+                            readonly
+                        />
+                    </div>
+                    <div class = "actions">
+                        <button class = "edit"> Edit</button>
+                        <button class = "delete"> Delete</button>
+                    </div>
+                </div> 
+
+            </div>
+        </section>
+
+        <!--section to list completed tasks. is this necessary?-->
+        <section class="completed-task-list">
+            <h2>Completed Tasks</h2>
+            <div id="complete-tasks">
+
+            </div>
+    </main>
+<!--link to the javascript king!-->
+</body>
+</html>
