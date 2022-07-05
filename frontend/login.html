@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+
+    <link rel="stylesheet" href="main.css"/>
+</head>
+
+<body>
+    <header>
+        <h1>Please log in to continue</h1>
+    </header>
+    
+    <main>
+        <section class = "signup-form">
+        
+           <form id="login-form">
+            <input
+                type = "text"
+                id = "email-input"
+                placeholder="e.g john@email.com"/>
+                
+            <input
+                type = "text"
+                id = "password-input"
+                placeholder="password"/>
+            
+            <div class = "actions">
+                    <button class = "signup" type="submit"> Log In</button>
+            </div>
+        </form>
+        
+        <div>
+            <button id="nav" onclick="document.location='signup.html'">Go to Sign Up</button>
+        </div>
+        
+        </section>
+    </main>
+    <script src="login.js"></script>
+</body>
+</html>
