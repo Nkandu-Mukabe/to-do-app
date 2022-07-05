@@ -65,7 +65,7 @@ app.put('/todos', (req, res) =>{
     connection.query("UPDATE to_do_list SET title = ? WHERE id = ? AND userID = ?;", [modif_title, id, userID], function (error, results, fields){
         if (error) throw error;
         console.log(results)
-        res.send("Edited successfully")
+        res.json("Edited successfully")
     })
 })
 
