@@ -35,7 +35,6 @@ app.post('/signUp', (req, res) =>{
             }
         }
         else{
-            console.log(results)
             res.json(results.insertId)
         }
     })
