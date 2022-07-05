@@ -1,7 +1,7 @@
 # TO DO APP
 A simple web application to view and save your to do list once you've logged in or signed up.
 
-# GETTING STARTED
+## GETTING STARTED
 ## Pre-requisites
 - Before running this project you need to have Node.js installed https://nodejs.dev/
 - Make sure you have mySQL installed and create a database called "todos"
@@ -17,6 +17,7 @@ A simple web application to view and save your to do list once you've logged in 
 ## Required Library and Tech
 - mysql database
 - npm libraries:
-- express
-- body parser
-- cors
+  - express
+  - body parser
+  - cors
+  - mysql2

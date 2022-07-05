@@ -18,7 +18,7 @@ const connection = mysql.createConnection({
 
 connection.connect()
 connection.query("CREATE TABLE IF NOT EXISTS Users (userID INT NOT NULL AUTO_INCREMENT, username VARCHAR(255) UNIQUE, password VARCHAR(255), PRIMARY KEY(userID));")
-connection.query("CREATE TABLE IF NOT EXISTS to_do_list (id INT NOT NULL AUTO_INCREMENT, title VARCHAR(255), complete_status BOOL, userID INT, PRIMARY KEY(id), FOREIGN KEY(userID) REFERENCES Users(userID));")
+connection.query("CREATE TABLE IF NOT EXISTS to_do_list (id INT NOT NULL AUTO_INCREMENT, title VARCHAR(255), userID INT, PRIMARY KEY(id), FOREIGN KEY(userID) REFERENCES Users(userID));")
 
 
 app.post('/signUp', (req, res) =>{
@@ -36,7 +36,12 @@ app.post('/logIn', (req, res) =>{
     let password = req.body.password
     connection.query("SELECT * FROM Users WHERE username = ? AND password = ?;", [username, password], function (error, results, fields){
         if (error) throw error;
-        res.json(results[0].userID)
+        if (results.length == 0){
+            res.json('-1')
+        }
+        else{
+            res.json(results[0].userID)
+        }
     })
 })
 
@@ -50,9 +55,8 @@ app.get('/todos', (req,res) => {
 
 app.post('/todos', (req, res) =>{
     let title = req.body.title
-    let complete_status = req.body.complete_status
     let userID = req.body.userID
-    connection.query("INSERT INTO to_do_list (title, complete_status, userID) VALUES (?, ?, ?);", [title, complete_status, userID], function (error, results, fields){
+    connection.query("INSERT INTO to_do_list (title, userID) VALUES (?, ?);", [title, userID], function (error, results, fields){
         if (error) throw error;
     })
     res.send("Created successfully")
@@ -83,7 +87,6 @@ app.delete('/todos', (req, res) => {
     })
 })
 
-//instruct node.js to listen to the request on defined port
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`)
 })

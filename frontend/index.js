@@ -17,45 +17,47 @@ form.addEventListener("submit", (e) =>{
         alert("Please enter a task")
     }
     else
-    {const body = {
-        title : input,
-        userID: userID
+    {
+        const body = {
+            title : input,
+            userID: userID
+        }
+
+        const task_el = document.createElement("div")
+        task_el.classList.add("task")
+
+        const task_content_el = document.createElement("div")
+        task_content_el.classList.add("content")
+        task_content_el.innerText = input
+        
+        task_el.appendChild(task_content_el)
+        list_el.appendChild(task_el)
+
+
+        fetch('http://localhost:3000/todos', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            mode: 'cors',
+            body: JSON.stringify(body)
+        })
+        .then(response => response.json())
+        .then(data => {
+            console.log(data)
+        })
+        .catch(error => {
+            console.log(error)
+        })
+        .finally(() => {
+            input_el.value = ""
+            clearlist()
+            displayList()
+        })
     }
-
-    const task_el = document.createElement("div")
-    task_el.classList.add("task")
-
-    const task_content_el = document.createElement("div")
-    task_content_el.classList.add("content")
-    task_content_el.innerText = input
-    
-    task_el.appendChild(task_content_el)
-    list_el.appendChild(task_el)
-
-
-    fetch('http://localhost:3000/todos', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        mode: 'cors',
-        body: JSON.stringify(body)
-    })
-    .then(response => response.json())
-    .then(data => {
-        console.log(data)
-    })
-    .catch(error => {
-        console.log(error)
-        //other error handling
-    })
-    .finally(() => {
-        input_el.value = ""
-        clearlist()
-        displayList()
-    })}
 })
 
+//clears tasks before display
 function clearlist() {
     const taskDiv = document.getElementById("tasks")
     while (taskDiv.hasChildNodes()) {
@@ -74,7 +76,6 @@ function deleteItem(id) {
     .then(response => response.json())
     .catch(error => {
         console.log(error)
-        //other error handling
     })
     .finally(() => {
         console.log("Deleted successfully")
@@ -85,8 +86,8 @@ function deleteItem(id) {
     })
 }
 
+//code to edit an existing task
 function editItem(id){
-    console.log(id)
     let editMessage = document.getElementById(String(id)).value
     console.log(editMessage)
     const body = {
@@ -109,7 +110,6 @@ function editItem(id){
     })
     .catch(error => {
         console.log(error)
-        //other error handling
     })
     .finally(() => {
         input_el.value = ""
@@ -150,7 +150,6 @@ function displayList() {
     })
     .catch(error => {
         console.log(error)
-        //other error handling
     })
 }
 
