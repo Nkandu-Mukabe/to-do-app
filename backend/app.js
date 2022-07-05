@@ -2,6 +2,7 @@ const express = require('express')
 const mysql = require('mysql2')
 const cors = require('cors')
 const bodyParser = require('body-parser')
+const e = require('express')
 const app = express()
 app.use(express.json())
 app.use(express.urlencoded({ extended: true })) 
@@ -25,9 +26,18 @@ app.post('/signUp', (req, res) =>{
     let username = req.body.username
     let password = req.body.password
     connection.query("INSERT INTO Users (username, password) VALUES (?, ?);", [username, password], function (error, results, fields){
-        if (error) throw error;
-        console.log(results)
-        res.json(results.insertId)
+        if (error) {
+            if (error.code == 'ER_DUP_ENTRY'){
+                res.json('-1')
+            }
+            else{
+                throw error
+            }
+        }
+        else{
+            console.log(results)
+            res.json(results.insertId)
+        }
     })
 })
 

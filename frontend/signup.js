@@ -23,9 +23,14 @@ form.addEventListener("submit", (e) =>{
         })
         .then(response => response.json())
         .then(data => {
+            if(data == '-1'){
+                alert("Looks like this account already exists, try logging in")
+            }
+            else{
             console.log(data)
             localStorage.setItem("user", data)
             window.location.replace("index.html")
+            }
         })
         .catch(error => {
             console.log(error)
