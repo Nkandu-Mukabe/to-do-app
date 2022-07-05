@@ -1,6 +1,7 @@
 const form = document.querySelector('#new-task-form')
 const userID = localStorage.getItem("user")
 const list_el = document.querySelector('#tasks')
+const input_el = document.getElementById('new-task-input')
     
     
 window.addEventListener('load', () =>{
@@ -45,12 +46,46 @@ form.addEventListener("submit", (e) =>{
         console.log(error)
         //other error handling
     })
+    .finally(() => {
+        input_el.value = ""
+        clearlist()
+        displayList()
+    })
 })
 
+function clearlist() {
+    const taskDiv = document.getElementById("tasks")
+    while (taskDiv.hasChildNodes()) {
+        taskDiv.removeChild(taskDiv.firstChild)
+    }
+}
 
+function deleteItem(id) {
+    fetch(`http://localhost:3000/todos?id=${id}`, {
+        method: 'DELETE',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        mode: 'cors',
+    })
+    .then(response => response.json())
+    .catch(error => {
+        console.log(error)
+        //other error handling
+    })
+    .finally(() => {
+        console.log("Deleted successfully")
+        clearlist()
+        displayList()
+        
+    })
+}
+
+function editItem
 
 //code to fetch existing tasks
-fetch(`http://localhost:3000/todos?userID=${userID}`)
+function displayList() {
+    fetch(`http://localhost:3000/todos?userID=${userID}`)
     .then(response => response.json())
     .then(data => {
         console.log(data)
@@ -68,8 +103,8 @@ fetch(`http://localhost:3000/todos?userID=${userID}`)
                     />
                 </div>
                 <div class = "actions">
-                    <button class = "edit"> Edit</button>
-                    <button class = "delete"> Delete</button>
+                    <button onclick = "editItem(${element.id}, ${element.title})" class = "edit"> Edit</button>
+                    <button onclick = "deleteItem(${element.id})" class = "delete"> Delete</button>
                 </div>
             </div>`
         )    
@@ -80,3 +115,6 @@ fetch(`http://localhost:3000/todos?userID=${userID}`)
         console.log(error)
         //other error handling
     })
+}
+
+displayList()
